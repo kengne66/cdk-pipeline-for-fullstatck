@@ -97,10 +97,10 @@ export class PipelineCdkStack extends cdk.Stack {
         }),
 
         new CodeBuildAction({
-          actionName: 'Service_Build',
+          actionName: 'angular_Build',
           input:  this.angularSourceOutput,
           outputs: [this.angularBuildOutput],
-          project: new PipelineProject(this, 'ServiceBuildProject', {
+          project: new PipelineProject(this, 'angularBuildProject', {
             environment: {
               buildImage: LinuxBuildImage.STANDARD_5_0
             },
@@ -110,7 +110,7 @@ export class PipelineCdkStack extends cdk.Stack {
         })
       ]
     });
-/*
+
     this.pipeline.addStage( {
       stageName: "pipeline_Update",
       actions: [
@@ -122,7 +122,7 @@ export class PipelineCdkStack extends cdk.Stack {
         }),
       ],
     });
-  */
+  
 
   }
   /*
