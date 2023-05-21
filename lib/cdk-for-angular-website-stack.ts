@@ -77,7 +77,7 @@ export class PipelineCdkStack extends cdk.Stack {
     //const stringified = fs.readFileSync(path.join(__dirname, './buildspec.yml'), { encoding: 'utf-8', });
     //const parsed  = yaml.parse(stringified);
 
-    const specFile = (this.angularBuildOutput.atPath(`'build-specs/service-build-spec.yml'`)).fileName
+    //const specFile = (this.angularBuildOutput.atPath(`'build-specs/service-build-spec.yml'`)).fileName
 
     this.pipeline.addStage({
       stageName: "Build",
@@ -110,7 +110,7 @@ export class PipelineCdkStack extends cdk.Stack {
         })
       ]
     });
-/*
+
     this.pipeline.addStage( {
       stageName: "pipeline_Update",
       actions: [
@@ -122,7 +122,7 @@ export class PipelineCdkStack extends cdk.Stack {
         }),
       ],
     });
-  */
+  
 
   }
   /*
