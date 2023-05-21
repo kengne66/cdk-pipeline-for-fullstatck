@@ -110,7 +110,7 @@ export class PipelineCdkStack extends cdk.Stack {
         })
       ]
     });
-
+/*
     this.pipeline.addStage( {
       stageName: "pipeline_Update",
       actions: [
@@ -122,6 +122,7 @@ export class PipelineCdkStack extends cdk.Stack {
         }),
       ],
     });
+  */
 
   }
   /*
