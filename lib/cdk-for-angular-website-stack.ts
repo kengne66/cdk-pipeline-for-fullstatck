@@ -150,7 +150,7 @@ export class PipelineCdkStack extends cdk.Stack {
       actions: [
         new CloudFormationCreateUpdateStackAction( {
           actionName: "Pipeline_Update",
-          stackName: "angularPipelineCDKStack",
+          stackName: "angularCDKPipelineStack",
           templatePath: this.cdkBuildOutput.atPath("angularCDKPipelineStack.template.json"),
           adminPermissions: true
         }),
