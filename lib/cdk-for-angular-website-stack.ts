@@ -131,7 +131,7 @@ export class PipelineCdkStack extends cdk.Stack {
       new CloudFormationCreateUpdateStackAction( {
         actionName: "websiteInfraupdate",
         stackName: frontEndStack.stackName,
-        templatePath: this.cdkBuildOutput.atPath(`${frontEndStackName}..template.json`),
+        templatePath: this.cdkBuildOutput.atPath(`${frontEndStackName}.template.json`),
         adminPermissions: true
       }),
 
