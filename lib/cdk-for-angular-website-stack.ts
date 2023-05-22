@@ -30,23 +30,23 @@ export class PipelineCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    this.pipeline = new Pipeline(this, "PipelineCDK", {
-      pipelineName: 'PipelineCDK',
+    this.pipeline = new Pipeline(this, "angularCDKPipeline", {
+      pipelineName: 'AngularCDKPipeline',
       crossAccountKeys: false,
       restartExecutionOnUpdate: true,
       
     });
     
     this.pipelineNotificationsTopic = new Topic(
-      this, "PipelineNotificationsTopic", {
-        topicName: "PipelineNotificationsTopic"
+      this, "angularCdkPipelineNotificationsTopic", {
+        topicName: "angularCdkPipelineNotificationsTopic"
       }
     )
 
     this.pipelineNotificationsTopic.addSubscription(new EmailSubscription("pierre_kengne@yahoo.com"))
 
-    const cdkSourceOutput = new Artifact('CDKsourceOutput');
-    this.angularSourceOutput = new Artifact('ServiceSourceOutput');
+    const cdkSourceOutput = new Artifact('CDKForAngularsourceOutput');
+    this.angularSourceOutput = new Artifact('angularSourceOutput');
 
     this.pipeline.addStage({
       stageName: 'Source',
@@ -71,8 +71,8 @@ export class PipelineCdkStack extends cdk.Stack {
     });
 
 
-    this.cdkBuildOutput = new Artifact('cdkBuildOutput')
-    this.angularBuildOutput = new Artifact('serviceBuildOutput')
+    this.cdkBuildOutput = new Artifact('cdkForAngularBuildOutput')
+    this.angularBuildOutput = new Artifact('angularBuildOutput')
 
     //const stringified = fs.readFileSync(path.join(__dirname, './buildspec.yml'), { encoding: 'utf-8', });
     //const parsed  = yaml.parse(stringified);
@@ -116,8 +116,8 @@ export class PipelineCdkStack extends cdk.Stack {
       actions: [
         new CloudFormationCreateUpdateStackAction( {
           actionName: "Pipeline_Update",
-          stackName: "PipelineCDKStack",
-          templatePath: this.cdkBuildOutput.atPath("PipelineCDKStack.template.json"),
+          stackName: "angularPipelineCDKStack",
+          templatePath: this.cdkBuildOutput.atPath("angularCDKPipelineStack.template.json"),
           adminPermissions: true
         }),
       ],
