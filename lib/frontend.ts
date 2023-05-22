@@ -1,6 +1,6 @@
 import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from 'constructs';
-import { Bucket, BlockPublicAccess } from "aws-cdk-lib/aws-s3";
+import { Bucket, BlockPublicAccess, IBucket } from "aws-cdk-lib/aws-s3";
 import { Distribution, ViewerProtocolPolicy } from "aws-cdk-lib/aws-cloudfront";
 import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { DnsValidatedCertificate } from "aws-cdk-lib/aws-certificatemanager";
@@ -14,15 +14,16 @@ export interface FrontendStackProps extends StackProps {
 }
 
 export class FrontendStack extends Stack {
+  readonly frontEndBucket: IBucket
   constructor(scope: Construct, id: string, props: FrontendStackProps) {
     super(scope, id, props);
 
-    const bucket = new Bucket(this, "FrontendBucket", {
+    this.frontEndBucket = new Bucket(this, "FrontendBucket", {
       bucketName: props.domainName,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
     });
 
-    new CfnOutput(this, 'websitebucket', { value: bucket.bucketArn });
+    new CfnOutput(this, 'websitebucket', { value: this.frontEndBucket.bucketArn });
     /*
     const zone = Route53.PublicHostedZone.fromHostedZoneAttributes(
       this,
@@ -42,7 +43,7 @@ export class FrontendStack extends Stack {
 
     const distribution = new Distribution(this, "FrontendDistribution", {
       defaultBehavior: {
-        origin: new S3Origin(bucket),
+        origin: new S3Origin(this.frontEndBucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       //domainNames: [props.domainName],

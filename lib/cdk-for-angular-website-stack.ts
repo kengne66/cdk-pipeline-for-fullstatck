@@ -17,6 +17,7 @@ import { EventField, RuleTargetInput } from 'aws-cdk-lib/aws-events';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 import { WebsiteStage } from './stages/website';
 import * as s3 from "aws-cdk-lib/aws-s3"
+import { FrontendStack } from './frontend';
 //import { IStage } from 'aws-cdk-lib/aws-apigateway';
 
 // import * as sqs from '@aws-cdk/aws-sqs';
@@ -113,18 +114,24 @@ export class PipelineCdkStack extends cdk.Stack {
         })
       ]
     });
-
-    const infraStage = new WebsiteStage(this, "infraStage", {
+/*
+    const infraStage =  new WebsiteStage(this, "infraStage", {
       domainName: this.domainName
     })
+*/
+
+  const frontEndStack = new FrontendStack(this, "FrontEndStack", {
+    domainName: this.domainName
+  });
+  const frontEndStackName = frontEndStack.stackName;
 
   this.pipeline.addStage({
     stageName: "infrastage",
     actions: [
       new CloudFormationCreateUpdateStackAction( {
         actionName: "websiteInfraupdate",
-        stackName: "FrontendStack",
-        templatePath: this.cdkBuildOutput.atPath("FrontendStack.template.json"),
+        stackName: frontEndStack.stackName,
+        templatePath: this.cdkBuildOutput.atPath(`${frontEndStackName}..template.json`),
         adminPermissions: true
       }),
 
@@ -132,8 +139,8 @@ export class PipelineCdkStack extends cdk.Stack {
 
   });
 
-    const targetBucket = s3.Bucket.fromBucketArn(this, "websiteBucket", cdk.Fn.importValue("websitebucket"))
-
+    //const targetBucket = s3.Bucket.fromBucketArn(this, "websiteBucket", cdk.Fn.importValue("websitebucket"))
+    const targetBucket = frontEndStack.frontEndBucket
     this.pipeline.addStage({
       stageName: "deploy",
       actions: [
