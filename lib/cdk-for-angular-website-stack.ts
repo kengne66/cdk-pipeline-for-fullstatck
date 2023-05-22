@@ -4,7 +4,7 @@ import { Construct } from 'constructs';
 import { BuildEnvironmentVariableType, BuildSpec, LinuxBuildImage, PipelineProject, Project } from 'aws-cdk-lib/aws-codebuild';
 import { Artifact, IStage, Pipeline } from 'aws-cdk-lib/aws-codepipeline';
 import { CodePipeline } from "aws-cdk-lib/pipelines";
-import { CloudFormationCreateUpdateStackAction, CodeBuildAction, CodeBuildActionType, GitHubSourceAction } from 'aws-cdk-lib/aws-codepipeline-actions';
+import { CloudFormationCreateUpdateStackAction, CodeBuildAction, CodeBuildActionType, GitHubSourceAction, S3DeployAction } from 'aws-cdk-lib/aws-codepipeline-actions';
 //import { ServiceStack } from "./service-stack";
 //import * as yaml from 'yaml'; // https://www.npmjs.com/package/yaml
 import * as path from "path";
@@ -15,6 +15,8 @@ import { SnsTopic } from 'aws-cdk-lib/aws-events-targets';
 import { Topic } from 'aws-cdk-lib/aws-sns';
 import { EventField, RuleTargetInput } from 'aws-cdk-lib/aws-events';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
+import { WebsiteStage } from './stages/website';
+import * as s3 from "aws-cdk-lib/aws-s3"
 //import { IStage } from 'aws-cdk-lib/aws-apigateway';
 
 // import * as sqs from '@aws-cdk/aws-sqs';
@@ -26,6 +28,7 @@ export class PipelineCdkStack extends cdk.Stack {
   private readonly angularBuildOutput: Artifact;
   private readonly angularSourceOutput: Artifact;
   private readonly pipelineNotificationsTopic: Topic;
+  readonly domainName = "envision.com"
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -107,6 +110,37 @@ export class PipelineCdkStack extends cdk.Stack {
 
           })
           
+        })
+      ]
+    });
+
+    const infraStage = new WebsiteStage(this, "infraStage", {
+      domainName: this.domainName
+    })
+
+  this.pipeline.addStage({
+    stageName: "infrastage",
+    actions: [
+      new CloudFormationCreateUpdateStackAction( {
+        actionName: "websiteInfraupdate",
+        stackName: "FrontendStack",
+        templatePath: this.cdkBuildOutput.atPath("FrontendStack.template.json"),
+        adminPermissions: true
+      }),
+
+    ]
+
+  });
+
+    const targetBucket = s3.Bucket.fromBucketArn(this, "websiteBucket", cdk.Fn.importValue("websitebucket"))
+
+    this.pipeline.addStage({
+      stageName: "deploy",
+      actions: [
+        new S3DeployAction({
+          actionName: 's3Deploy',
+          bucket: targetBucket,
+          input: this.angularBuildOutput,
         })
       ]
     });
