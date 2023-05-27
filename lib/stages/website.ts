@@ -9,11 +9,11 @@ export interface WebsiteStageProps extends StageProps {
 }
 
 export class WebsiteStage extends Stage {
-  readonly FrontEndStack: Stack
+  readonly frontEndStack: Stack
   constructor(scope: Construct, id: string, props: WebsiteStageProps) {
     super(scope, id, props);
 
-   this.FrontEndStack =  new FrontendStack(this, "FrontendStack", props);
+   //this.frontEndStack =  new FrontendStack(this, "FrontendStack", props);
     
   }
 }

@@ -25,7 +25,7 @@ interface FrontendProps {
   apiDomainPrefix: string;
 }
 
-export class Frontend extends Construct {
+export class FrontendStack extends Construct {
   constructor(scope: Construct, id: string, props: FrontendProps) {
     super(scope, id);
 
