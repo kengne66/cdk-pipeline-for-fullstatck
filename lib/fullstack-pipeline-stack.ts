@@ -23,8 +23,7 @@ import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 
 // import * as sqs from '@aws-cdk/aws-sqs';
 //import { Construct } from '@aws-cdk/core';
-
-
+//https://github.com/findy-network/findy-agent-infra/blob/master/aws-ecs/lib/frontend.ts#L47
 
 export class fullStackPipeline extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -38,14 +37,14 @@ export class fullStackPipeline extends cdk.Stack {
         input: CodePipelineSource.gitHub('kengne66/cdk-pipeline-for-fullstatck', 'main', {
           authentication: githubAuth
         }),
-/*
+
         additionalInputs: {
           "../static-website": CodePipelineSource.gitHub('kengne66/angular-website-example', 'master', {
             authentication: githubAuth
           }),
       
         },
-*/
+
         installCommands: [
           'npm install -g aws-cdk'
       ],
@@ -57,13 +56,18 @@ export class fullStackPipeline extends cdk.Stack {
 
     fullstackpipeline.addWave('MyWave', {
       post: [
+        
         new CodeBuildStep('RunApproval', {
+          /*
           input: CodePipelineSource.gitHub('kengne66/angular-website-example', 'master', {
             authentication: githubAuth
           }),
+          */
           
 
           installCommands: [
+            'ls',
+            'cd ../static-website',
             'npm install -g aws-cdk'
         ],
           commands: ['npm ci', 'npm run build', 'ls'],
@@ -77,6 +81,10 @@ export class fullStackPipeline extends cdk.Stack {
         }),
       ],
     });
+
+
+
+
 
 
 /*
