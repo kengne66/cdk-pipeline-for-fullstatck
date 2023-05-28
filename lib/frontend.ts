@@ -33,10 +33,10 @@ export class FrontendStack extends Construct {
     const { rootDomainName: domainName, appDomainPrefix: subDomainName } =
       props;
 
-    const bucketName = `${id}bucket`;
+    const bucketName = domainName;
 
     // Create S3 bucket for frontend deployment
-    const bucket = new Bucket(this, `${id}-bucket`, {
+    const bucket = new Bucket(this, bucketName, {
       bucketName: bucketName,
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
