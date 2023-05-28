@@ -70,7 +70,7 @@ export class FrontendStack extends Construct {
     */
 
     new s3deploy.BucketDeployment(this, `${id}-deployment`, {
-      sources: [s3deploy.Source.asset('../static-website/dist/websitePractise')],
+      sources: [s3deploy.Source.asset('../static-website/artifacts')],
       destinationBucket: bucket,
       logRetention: RetentionDays.ONE_MONTH
     });

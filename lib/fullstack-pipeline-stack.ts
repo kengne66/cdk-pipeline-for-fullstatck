@@ -94,7 +94,7 @@ export class fullStackPipeline extends cdk.Stack {
         installCommands: [
           'npm install -g aws-cdk'
       ],
-        commands: ['npm ci', 'npm run build', 'npx cdk synth']
+        commands: ['npm ci', 'npm run build', 'npx cdk synth', 'cd ../static-website && mkdir artifacts']
       }),
 
       
