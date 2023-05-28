@@ -147,8 +147,7 @@ export class fullStackPipeline extends cdk.Stack {
         
 
         installCommands: [
-          'ls',
-          'cd ../static-website',
+          'pwd',
           'npm install -g aws-cdk',
           'ls'
       ],
