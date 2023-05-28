@@ -146,7 +146,7 @@ export class fullStackPipeline extends cdk.Stack {
  
 
     buildabgularStage.addPre(
-      new CodeBuildStep('builAngular', {
+      new CodeBuildStep('builAngular1', {
         
         input: websiteInput,
         
@@ -169,10 +169,10 @@ export class fullStackPipeline extends cdk.Stack {
     ));
 
 
-    const deploy = new InfraPipelineStage(this, "Deploy1", {
+    const deploy1 = new InfraPipelineStage(this, "Deploy1", {
       env: props?.env,
     });
-    const deployStage = fullstackpipeline.addStage(deploy);
+    const deployStage = fullstackpipeline.addStage(deploy1);
 
   }
 
