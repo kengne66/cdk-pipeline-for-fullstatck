@@ -36,6 +36,7 @@ import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 import { GRPCPortNumber } from "./constants";
 import { NotificationRule } from "aws-cdk-lib/aws-codestarnotifications";
+import { buildStage } from './stages/build-stage';
 
 interface InfraPipelineProperties extends cdk.StackProps { }
 
@@ -136,15 +137,15 @@ export class fullStackPipeline extends cdk.Stack {
 
 
 
-    const deploy = new InfraPipelineStage(this, "Deploy", {
+    const buildabgular = new buildStage(this, "Deploy", {
       env: props?.env,
     });
-    const deployStage = fullstackpipeline.addStage(deploy);
+    const buildabgularStage = fullstackpipeline.addStage(buildabgular);
 
     // Use custom step to update with custom healthy settings
  
 
-    deployStage.addPre(
+    buildabgularStage.addPre(
       new CodeBuildStep('builAngular', {
         
         input: websiteInput,
@@ -167,6 +168,11 @@ export class fullStackPipeline extends cdk.Stack {
       }
     ));
 
+
+    const deploy = new InfraPipelineStage(this, "Deploy", {
+      env: props?.env,
+    });
+    const deployStage = fullstackpipeline.addStage(deploy);
 
   }
 
