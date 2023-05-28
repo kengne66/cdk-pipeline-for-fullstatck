@@ -137,10 +137,10 @@ export class fullStackPipeline extends cdk.Stack {
 
 
 
-    const buildabgular = new buildStage(this, "Deploy", {
+    const Buildabgular = new buildStage(this, "buildangular1", {
       env: props?.env,
     });
-    const buildabgularStage = fullstackpipeline.addStage(buildabgular);
+    const buildabgularStage = fullstackpipeline.addStage(Buildabgular);
 
     // Use custom step to update with custom healthy settings
  
