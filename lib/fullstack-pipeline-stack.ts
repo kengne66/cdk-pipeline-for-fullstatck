@@ -155,7 +155,7 @@ export class fullStackPipeline extends cdk.Stack {
           'npm install -g aws-cdk',
           'ls'
       ],
-        commands: ['npm ci', 'npm run build', 'ls dist/websitePractise', 'cp -r dist/websitePractise/. artifacts/'],
+        commands: ['npm ci', 'npm run build', 'ls dist/websitePractise', 'cp -R dist/websitePractise/. artifacts/'],
         buildEnvironment: {
           // The user of a Docker image asset in the pipeline requires turning on
           // 'dockerEnabledForSelfMutation'.
