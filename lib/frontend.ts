@@ -45,7 +45,7 @@ export class FrontendStack extends Construct {
     });
 
     
-
+/*
     // Source bundle
     const srcBundle = s3deploy.Source.asset('../../findy-wallet-pwa', {
       bundling: {
@@ -66,12 +66,14 @@ export class FrontendStack extends Construct {
         },
       },
     });
-
+    */
+/*
     new s3deploy.BucketDeployment(this, `${id}-deployment`, {
-      sources: [srcBundle],
+      sources: [s3deploy.Source.asset('../static-website')],
       destinationBucket: bucket,
       logRetention: RetentionDays.ONE_MONTH
     });
+    */
 
     // Allow access only from cloudfront
     const bucketOriginAccessIdentity = new OriginAccessIdentity(

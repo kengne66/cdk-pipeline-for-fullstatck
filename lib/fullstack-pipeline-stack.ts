@@ -23,25 +23,71 @@ import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 
 // import * as sqs from '@aws-cdk/aws-sqs';
 //import { Construct } from '@aws-cdk/core';
+import { InfraPipelineStage } from './stages/website';
 //https://github.com/findy-network/findy-agent-infra/blob/master/aws-ecs/lib/frontend.ts#L47
 
+import {
+  aws_codebuild as codebuild,
+  aws_logs as logs,
+  CfnOutput,
+} from "aws-cdk-lib";
+import { StringParameter } from "aws-cdk-lib/aws-ssm";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
+
+import { GRPCPortNumber } from "./constants";
+import { NotificationRule } from "aws-cdk-lib/aws-codestarnotifications";
+
+interface InfraPipelineProperties extends cdk.StackProps { }
+
+const environmentVariables: Record<string, codebuild.BuildEnvironmentVariable> =
+{
+  DOMAIN_NAME: {
+    type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+    value: "/findy-agency/domain-name",
+  },
+  SUB_DOMAIN_NAME: {
+    type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+    value: "/findy-agency/sub-domain-name",
+  },
+  API_SUB_DOMAIN_NAME: {
+    type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+    value: "/findy-agency/api-sub-domain-name",
+  },
+  GENESIS_TRANSACTIONS: {
+    type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+    value: "/findy-agency/genesis",
+  },
+  ADMIN_ID: {
+    type: codebuild.BuildEnvironmentVariableType.SECRETS_MANAGER,
+    value: "FindyAgency:findy-agency-admin-id",
+  },
+  ADMIN_AUTHN_KEY: {
+    type: codebuild.BuildEnvironmentVariableType.SECRETS_MANAGER,
+    value: "FindyAgency:findy-agency-admin-authn-key",
+  },
+};
+
+
 export class fullStackPipeline extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: InfraPipelineProperties) {
     super(scope, id, props);
 
     const githubAuth = cdk.SecretValue.secretsManager('github-token');
 
+    const infraInput = CodePipelineSource.gitHub('kengne66/cdk-pipeline-for-fullstatck', 'main', {
+      authentication: githubAuth
+    });
+    const websiteInput = CodePipelineSource.gitHub('kengne66/angular-website-example', 'master', {
+      authentication: githubAuth
+    });
+
     const fullstackpipeline = new CodePipeline(this, 'fullstackPipeline', {
       pipelineName: 'fullstackPipeline',
       synth: new ShellStep('Synth', {
-        input: CodePipelineSource.gitHub('kengne66/cdk-pipeline-for-fullstatck', 'main', {
-          authentication: githubAuth
-        }),
+        input: infraInput,
 
         additionalInputs: {
-          "../static-website": CodePipelineSource.gitHub('kengne66/angular-website-example', 'master', {
-            authentication: githubAuth
-          }),
+          "../static-website":websiteInput
       
         },
 
@@ -54,15 +100,18 @@ export class fullStackPipeline extends cdk.Stack {
       
     });
 
+
+    /*
+    
     fullstackpipeline.addWave('MyWave', {
       post: [
         
         new CodeBuildStep('RunApproval', {
-          /*
+   
           input: CodePipelineSource.gitHub('kengne66/angular-website-example', 'master', {
             authentication: githubAuth
           }),
-          */
+
           
 
           installCommands: [
@@ -81,19 +130,43 @@ export class fullStackPipeline extends cdk.Stack {
         }),
       ],
     });
+    */
 
+    const deploy = new InfraPipelineStage(this, "Deploy", {
+      env: props?.env,
+    });
+    const deployStage = fullstackpipeline.addStage(deploy);
 
+    // Use custom step to update with custom healthy settings
+ 
 
+    deployStage.addPre(
+      new CodeBuildStep('builAngular', {
+        
+        input: websiteInput,
+        
 
+        installCommands: [
+          'ls',
+          'cd ../static-website',
+          'npm install -g aws-cdk',
+          'ls'
+      ],
+        commands: ['npm ci', 'npm run build', 'ls'],
+        buildEnvironment: {
+          // The user of a Docker image asset in the pipeline requires turning on
+          // 'dockerEnabledForSelfMutation'.
+          buildImage: LinuxBuildImage.STANDARD_6_0
+        },
+        primaryOutputDirectory: 'dist/websitePractise',
+      
+      }
+    ));
 
-
-/*
-    fullstackpipeline.addStage(new LambdaAppStage(this, "dev", {
-      env: {account: '673233218795', region: 'us-east-1',}
-    }))
-*/
 
   }
+
+  
 }
 
 

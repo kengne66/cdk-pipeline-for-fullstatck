@@ -1,19 +1,16 @@
-import { Stack, Stage, StageProps } from "aws-cdk-lib";
-import { Construct } from 'constructs';
-import { FrontendStack } from "../frontend";
 
-export interface WebsiteStageProps extends StageProps {
-  domainName: string;
-  //hostedZoneName: string;
-  //hostedZoneId: string;
-}
+import { Stage, StageProps, CfnOutput } from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { InfraStack } from "../infra-stack";
 
-export class WebsiteStage extends Stage {
-  readonly frontEndStack: Stack
-  constructor(scope: Construct, id: string, props: WebsiteStageProps) {
+export class InfraPipelineStage extends Stage {
+  public readonly clusterName: CfnOutput;
+  public readonly serviceArn: CfnOutput;
+  constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-   //this.frontEndStack =  new FrontendStack(this, "FrontendStack", props);
-    
+    const infra = new InfraStack(this, "FindyAgencyInfraStack", props);
+    this.clusterName = infra.clusterName;
+    this.serviceArn = infra.serviceArn;
   }
 }
