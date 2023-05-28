@@ -17,7 +17,7 @@ import { EventField, RuleTargetInput } from 'aws-cdk-lib/aws-events';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 //import { IStage } from 'aws-cdk-lib/aws-apigateway';
 
-import { CodeBuildStep, CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import { CodeBuildStep, CodePipeline, CodePipelineSource, ShellStep, StageDeployment } from 'aws-cdk-lib/pipelines';
 //import { LambdaAppStage } from './stages/lamba-app-stage';
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment"; 
 
@@ -99,7 +99,7 @@ export class fullStackPipeline extends cdk.Stack {
 
       
     });
-
+  
 
     /*
     
@@ -158,6 +158,7 @@ export class fullStackPipeline extends cdk.Stack {
           buildImage: LinuxBuildImage.STANDARD_6_0
         },
         primaryOutputDirectory: 'dist/websitePractise',
+        
       
       }
     ));

@@ -9,7 +9,7 @@ export class InfraPipelineStage extends Stage {
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    const infra = new InfraStack(this, "FindyAgencyInfraStack", props);
+    const infra = new InfraStack(this, "fullstackPipeline", props);
     this.clusterName = infra.clusterName;
     this.serviceArn = infra.serviceArn;
   }

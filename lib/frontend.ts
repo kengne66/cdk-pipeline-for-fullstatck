@@ -18,6 +18,7 @@ import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 
 import { GRPCPortNumber } from "./constants";
+import { ISource } from "aws-cdk-lib/aws-codebuild";
 
 interface FrontendProps {
   rootDomainName: string;
@@ -67,13 +68,13 @@ export class FrontendStack extends Construct {
       },
     });
     */
-/*
+
     new s3deploy.BucketDeployment(this, `${id}-deployment`, {
-      sources: [s3deploy.Source.asset('../static-website')],
+      sources: [s3deploy.Source.asset('dist/websitePractise')],
       destinationBucket: bucket,
       logRetention: RetentionDays.ONE_MONTH
     });
-    */
+    
 
     // Allow access only from cloudfront
     const bucketOriginAccessIdentity = new OriginAccessIdentity(
