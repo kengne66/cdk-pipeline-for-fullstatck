@@ -13,9 +13,9 @@ export class InfraStack extends Stack {
     super(scope, id, props);
 
     new FrontendStack(this, `${id}Frontend`, {
-      rootDomainName: process.env.DOMAIN_NAME || "angularwebsiteexample.com",
-      appDomainPrefix: process.env.SUB_DOMAIN_NAME || "angularwebsiteexample",
-      apiDomainPrefix: process.env.API_SUB_DOMAIN_NAME || "angularwebsiteexample-api",
+      rootDomainName: process.env.DOMAIN_NAME || "angularwebsiteepierre.com",
+      appDomainPrefix: process.env.SUB_DOMAIN_NAME || "angularwebsitepierre",
+      apiDomainPrefix: process.env.API_SUB_DOMAIN_NAME || "angularwebsitepierre-api",
     });
 /*
     const backend = new Backend(this, `${id}Backend`, {
