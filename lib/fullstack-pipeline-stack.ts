@@ -135,7 +135,7 @@ export class fullStackPipeline extends cdk.Stack {
     
 
 
-
+/*
     const deploy = new InfraPipelineStage(this, "Deploy", {
       env: props?.env,
     });
@@ -166,6 +166,7 @@ export class fullStackPipeline extends cdk.Stack {
       
       }
     ));
+    */
 
 
   }

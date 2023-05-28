@@ -68,13 +68,13 @@ export class FrontendStack extends Construct {
       },
     });
     */
-
+/*
     new s3deploy.BucketDeployment(this, `${id}-deployment`, {
-      sources: [s3deploy.Source.asset('../static-website')],
+      sources: [s3deploy.Source.asset('../static-website/dist/websitePractise')],
       destinationBucket: bucket,
       logRetention: RetentionDays.ONE_MONTH
     });
-    
+*/    
 
     // Allow access only from cloudfront
     const bucketOriginAccessIdentity = new OriginAccessIdentity(
