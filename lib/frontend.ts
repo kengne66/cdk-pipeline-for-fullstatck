@@ -42,7 +42,7 @@ export class FrontendStack extends Construct {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
       removalPolicy: RemovalPolicy.DESTROY,
-      blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      //blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true
     });
 
