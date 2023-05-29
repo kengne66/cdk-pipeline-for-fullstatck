@@ -42,6 +42,15 @@ export class FrontendStack extends Construct {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
       removalPolicy: RemovalPolicy.DESTROY,
+      //blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
+      //accessControl: BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
+      publicReadAccess: true,
+      blockPublicAccess: new BlockPublicAccess({
+        blockPublicAcls: false,
+        ignorePublicAcls: false,
+        blockPublicPolicy: false,
+        restrictPublicBuckets: false,
+      }),
       //blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true
     });
