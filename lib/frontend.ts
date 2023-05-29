@@ -106,7 +106,7 @@ export class FrontendStack extends Construct {
     listPolicyStatement.addCanonicalUserPrincipal(
       bucketOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId
     );
-    bucket.addToResourcePolicy(listPolicyStatement);
+   // bucket.addToResourcePolicy(listPolicyStatement);
 
     const s3Origin = {
       s3BucketSource: bucket,
