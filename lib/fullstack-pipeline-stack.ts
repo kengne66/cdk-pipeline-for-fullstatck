@@ -156,7 +156,7 @@ export class fullStackPipeline extends cdk.Stack {
           'npm install -g aws-cdk',
           'ls'
       ],
-        commands: ['npm ci', 'npm run build', 'ls dist/websitePractise', 'rm -r artifacts && mkdir artifacts', 'rsync -a dist/websitePractise/ artifacts/', 'ls artifacts'],
+        commands: ['npm ci', 'npm run build', 'ls dist/websitePractise', 'rm -r artifacts && mkdir artifacts', 'rsync -a dist/websitePractise/ artifacts/', 'ls artifacts', 'aws s3 sync artifacts/. s3://angularwebsiteepierre.com'],
         buildEnvironment: {
           // The user of a Docker image asset in the pipeline requires turning on
           // 'dockerEnabledForSelfMutation'.
@@ -168,12 +168,11 @@ export class fullStackPipeline extends cdk.Stack {
       }
     ));
     
-
     const deploy1 = new InfraPipelineStage(this, "Deploy1", {
       env: props?.env,
     });
     const deployStage = fullstackpipeline.addStage(deploy1);
-    fullstackpipeline.buildPipeline()
+  
   }
 
   
