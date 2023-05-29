@@ -82,11 +82,7 @@ export class FrontendStack extends Construct {
 
     
 
-    new s3deploy.BucketDeployment(this, `${id}-deployment`, {
-      sources: [s3deploy.Source.asset('../static-website/artifacts')],
-      destinationBucket: bucket,
-      logRetention: RetentionDays.ONE_MONTH
-    });
+  
     
 
     // Allow access only from cloudfront
@@ -208,6 +204,14 @@ export class FrontendStack extends Construct {
         ],
       }
     );
+
+    new s3deploy.BucketDeployment(this, `${id}-deployment`, {
+      sources: [s3deploy.Source.asset('../static-website/artifacts')],
+      destinationBucket: bucket,
+      logRetention: RetentionDays.ONE_MONTH,
+      distribution,
+      distributionPaths: ["/*"]
+    });
 /*
     // Add CloudFront distribution to domain routing
     new ARecord(this, `${id}-a-record`, {
