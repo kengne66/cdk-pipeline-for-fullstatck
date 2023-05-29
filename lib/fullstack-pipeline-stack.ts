@@ -137,15 +137,15 @@ export class fullStackPipeline extends cdk.Stack {
 
 
 
-    const Buildabgular = new buildStage(this, "buildangular1", {
+    const Buildangular = new InfraPipelineStage(this, "buildangular", {
       env: props?.env,
     });
-    const buildabgularStage = fullstackpipeline.addStage(Buildabgular);
+    const buildabgularStage = fullstackpipeline.addStage(Buildangular);
 
     // Use custom step to update with custom healthy settings
  
 
-    buildabgularStage.addPre(
+    buildabgularStage.addPost(
       new CodeBuildStep('builAngular1', {
         
         input: websiteInput,
@@ -167,13 +167,15 @@ export class fullStackPipeline extends cdk.Stack {
       
       }
     ));
-    
+  /*
     const deploy1 = new InfraPipelineStage(this, "Deploy1", {
       env: props?.env,
     });
     const deployStage = fullstackpipeline.addStage(deploy1);
+    */
   
   }
+  
 
   
 }
