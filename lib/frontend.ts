@@ -51,10 +51,10 @@ export class FrontendStack extends Construct {
         effect: iam.Effect.ALLOW,
         principals: [new iam.AnyPrincipal()],
         actions: ['s3:Get*', 's3:List*', 's3:ListObjectsV2', 's3:CopyObject', 's3:GetObject'],
-        resources: [`${bucket.bucketArn}/*`, `${bucket.bucketArn}` ],
+        resources: [bucket.bucketArn],
       }),
     );
-
+ 
 //
    
 /*
