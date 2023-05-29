@@ -42,10 +42,10 @@ export class FrontendStack extends Construct {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
       removalPolicy: RemovalPolicy.DESTROY,
-      //blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true
     });
-
+/*
     bucket.addToResourcePolicy(
       new PolicyStatement({
         effect: iam.Effect.ALLOW,
@@ -54,6 +54,7 @@ export class FrontendStack extends Construct {
         resources: [bucket.bucketArn, `${bucket.bucketArn}/*`],
       }),
     );
+    */
  
 //
 
@@ -94,25 +95,37 @@ export class FrontendStack extends Construct {
         comment: `Access bucket ${bucketName} only from Cloudfront`,
       }
     );
-  /*
+  
     const policyStatement = new PolicyStatement();
     policyStatement.addActions("s3:GetObject*");
     policyStatement.addResources(`${bucket.bucketArn}/*`);
     policyStatement.addCanonicalUserPrincipal(
       bucketOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId
     );
+    policyStatement.addAnyPrincipal()
     bucket.addToResourcePolicy(policyStatement);
+    
     const listPolicyStatement = new PolicyStatement();
     listPolicyStatement.addActions("s3:ListBucket");
     listPolicyStatement.addResources(bucket.bucketArn);
     listPolicyStatement.addCanonicalUserPrincipal(
       bucketOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId
     );
+    listPolicyStatement.addAnyPrincipal()
     bucket.addToResourcePolicy(listPolicyStatement);
-*/
+
+    const putPolicyStatement = new PolicyStatement();
+    putPolicyStatement.addActions("s3:PutObject");
+    putPolicyStatement.addResources(bucket.bucketArn);
+    putPolicyStatement.addCanonicalUserPrincipal(
+      bucketOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId
+    );
+    putPolicyStatement.addAnyPrincipal()
+    bucket.addToResourcePolicy(putPolicyStatement);
+
     const s3Origin = {
       s3BucketSource: bucket,
-      //originAccessIdentity: bucketOriginAccessIdentity,
+      originAccessIdentity: bucketOriginAccessIdentity,
     };
     
 /*
