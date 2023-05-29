@@ -137,16 +137,16 @@ export class fullStackPipeline extends cdk.Stack {
 
 
 
-    const Buildangular = new InfraPipelineStage(this, "buildangular", {
+    const BuildAngular = new InfraPipelineStage(this, "buildangularwebsite", {
       env: props?.env,
     });
-    const buildabgularStage = fullstackpipeline.addStage(Buildangular);
+    const BuildAngularStage = fullstackpipeline.addStage(BuildAngular);
 
     // Use custom step to update with custom healthy settings
  
 
-    buildabgularStage.addPost(
-      new CodeBuildStep('builAngular1', {
+    BuildAngularStage.addPost(
+      new CodeBuildStep('builAngularWeb', {
         
         input: websiteInput,
         
@@ -156,7 +156,7 @@ export class fullStackPipeline extends cdk.Stack {
           'npm install -g aws-cdk',
           'ls'
       ],
-        commands: ['npm ci', 'npm run build', 'ls dist/websitePractise', 'rm -r artifacts && mkdir artifacts', 'rsync -a dist/websitePractise/ artifacts/', 'ls artifacts', 'aws s3 sync artifacts/. s3://angularwebsitepierre.com'],
+        commands: ['npm ci', 'npm run build', 'ls dist/websitePractise', 'rm -r artifacts && mkdir artifacts', 'rsync -a dist/websitePractise/ artifacts/', 'ls artifacts', 'aws s3 sync artifacts/. s3://angularwebsite.pierre.com'],
         buildEnvironment: {
           // The user of a Docker image asset in the pipeline requires turning on
           // 'dockerEnabledForSelfMutation'.
