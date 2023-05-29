@@ -135,7 +135,7 @@ export class FrontendStack extends Construct {
     // CloudFront distribution with forward logic to backend
     const distribution = new CloudFrontWebDistribution(
       this,
-      `${id}-distribution`,
+      `${id}-distribution1`,
       {
         /*viewerCertificate: {
           props: {
@@ -148,6 +148,12 @@ export class FrontendStack extends Construct {
         errorConfigurations: [
           {
             errorCode: 404,
+            responsePagePath: "/index.html",
+            responseCode: 200,
+            errorCachingMinTtl: 0,
+          },
+          {
+            errorCode: 400,
             responsePagePath: "/index.html",
             responseCode: 200,
             errorCachingMinTtl: 0,
