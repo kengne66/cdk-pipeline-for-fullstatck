@@ -109,12 +109,12 @@ export class FrontendStack extends Construct {
       bucketOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId
     );
     bucket.addToResourcePolicy(listPolicyStatement);
-
+*/
     const s3Origin = {
       s3BucketSource: bucket,
-      originAccessIdentity: bucketOriginAccessIdentity,
+      //originAccessIdentity: bucketOriginAccessIdentity,
     };
-    */
+    
 /*
     const zone = HostedZone.fromLookup(this, `${id}-hosted-zone`, {
       domainName: domainName,
