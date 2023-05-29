@@ -45,7 +45,7 @@ export class FrontendStack extends Construct {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true
     });
-
+/*
     bucket.addToResourcePolicy(
       new PolicyStatement({
         effect: iam.Effect.ALLOW,
@@ -56,6 +56,7 @@ export class FrontendStack extends Construct {
     );
  
 //
+*/
    
 /*
     // Source bundle
