@@ -45,18 +45,18 @@ export class FrontendStack extends Construct {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true
     });
-/*
+
     bucket.addToResourcePolicy(
       new PolicyStatement({
         effect: iam.Effect.ALLOW,
-        principals: [new iam.AccountRootPrincipal()],
-        actions: ["s3:Get*", 's3:List*', 's3:CopyObject'],
+        principals: [new iam.AnyPrincipal()],
+        actions: ["s3:*"],
         resources: [bucket.bucketArn, `${bucket.bucketArn}/*`],
       }),
     );
  
 //
-*/
+
    
 /*
     // Source bundle
@@ -94,6 +94,7 @@ export class FrontendStack extends Construct {
         comment: `Access bucket ${bucketName} only from Cloudfront`,
       }
     );
+  /*
     const policyStatement = new PolicyStatement();
     policyStatement.addActions("s3:GetObject*");
     policyStatement.addResources(`${bucket.bucketArn}/*`);
@@ -107,12 +108,13 @@ export class FrontendStack extends Construct {
     listPolicyStatement.addCanonicalUserPrincipal(
       bucketOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId
     );
-   // bucket.addToResourcePolicy(listPolicyStatement);
+    bucket.addToResourcePolicy(listPolicyStatement);
 
     const s3Origin = {
       s3BucketSource: bucket,
       originAccessIdentity: bucketOriginAccessIdentity,
     };
+    */
 /*
     const zone = HostedZone.fromLookup(this, `${id}-hosted-zone`, {
       domainName: domainName,
