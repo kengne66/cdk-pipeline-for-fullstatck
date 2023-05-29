@@ -116,7 +116,7 @@ export class FrontendStack extends Construct {
 
     const putPolicyStatement = new PolicyStatement();
     putPolicyStatement.addActions("s3:PutObject");
-    putPolicyStatement.addResources(bucket.bucketArn);
+    putPolicyStatement.addResources(`${bucket.bucketArn}/*`);
     putPolicyStatement.addCanonicalUserPrincipal(
       bucketOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId
     );
