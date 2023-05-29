@@ -49,7 +49,7 @@ export class FrontendStack extends Construct {
     let ipLimitPolicy = new PolicyStatement({
       actions: ['s3:Get*', 's3:List*', 's3:ListObjectsV2', 's3:CopyObject', 's3:GetObject'],
       resources: [bucket.arnForObjects('*')],
-      principals: [new iam.AccountRootPrincipal]
+      principals: [new iam.AnyPrincipal()]
     });
     
     /*
