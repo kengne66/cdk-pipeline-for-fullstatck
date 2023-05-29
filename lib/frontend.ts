@@ -16,6 +16,7 @@ import { Construct } from "constructs";
 import { apiPaths } from "./constants";
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
+import * as iam from 'aws-cdk-lib/aws-iam';
 
 import { GRPCPortNumber } from "./constants";
 import { ISource } from "aws-cdk-lib/aws-codebuild";
@@ -45,7 +46,20 @@ export class FrontendStack extends Construct {
       autoDeleteObjects: true
     });
 
+    let ipLimitPolicy = new PolicyStatement({
+      actions: ['s3:Get*', 's3:List*', 's3:ListObjectsV2', 's3:CopyObject', 's3:GetObject'],
+      resources: [bucket.arnForObjects('*')],
+      principals: [new iam.AccountRootPrincipal]
+    });
     
+    /*
+    ipLimitPolicy.addCondition('IpAddress', {
+      "aws:SourceIp": ['1.2.3.4/22']
+    });
+    */
+
+    // Allow connections from my CIDR
+    bucket.addToResourcePolicy(ipLimitPolicy);
 /*
     // Source bundle
     const srcBundle = s3deploy.Source.asset('../../findy-wallet-pwa', {
@@ -68,6 +82,8 @@ export class FrontendStack extends Construct {
       },
     });
     */
+
+    
 
     new s3deploy.BucketDeployment(this, `${id}-deployment`, {
       sources: [s3deploy.Source.asset('../static-website/artifacts')],
