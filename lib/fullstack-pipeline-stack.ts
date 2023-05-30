@@ -23,7 +23,7 @@ import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 
 // import * as sqs from '@aws-cdk/aws-sqs';
 //import { Construct } from '@aws-cdk/core';
-import { InfraPipelineStage } from './stages/website';
+import { InfraPipelineStage } from './stages/website-stage';
 //https://github.com/findy-network/findy-agent-infra/blob/master/aws-ecs/lib/frontend.ts#L47
 
 import {
@@ -37,6 +37,7 @@ import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { GRPCPortNumber } from "./constants";
 import { NotificationRule } from "aws-cdk-lib/aws-codestarnotifications";
 import { buildStage } from './stages/build-stage';
+import { LambdaAppStage } from './stages/lamba-app-stage';
 
 interface InfraPipelineProperties extends cdk.StackProps { }
 
@@ -174,7 +175,7 @@ export class fullStackPipeline extends cdk.Stack {
       }
     ));
 
-    const BuildLambda = new InfraPipelineStage(this, "buildLambdaStage", {
+    const BuildLambda = new LambdaAppStage(this, "buildLambdaStage", {
       env: props?.env,
     });
     const BuilLambdaStage = fullstackpipeline.addStage(BuildLambda);
