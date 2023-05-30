@@ -24,7 +24,7 @@ export class LambdaStack extends Stack {
     const Lambda = new Function(this, "serviceLambda", {
       runtime: Runtime.NODEJS_14_X,
       handler: "scr/lambda.handler",
-      code: Code.fromAsset('../lambda-code/scr/lambda'),
+      code: Code.fromAsset('../lambda-code/src/lambda'),
       functionName: `serviceLambda${props.stageName}`,
       description: `Generated on ${new Date().toISOString}`
     });
