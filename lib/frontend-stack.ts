@@ -42,8 +42,6 @@ export class FrontendStack extends Construct {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
       removalPolicy: RemovalPolicy.DESTROY,
-      //blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
-      //accessControl: BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
       publicReadAccess: true,
       blockPublicAccess: new BlockPublicAccess({
         blockPublicAcls: false,
@@ -51,49 +49,9 @@ export class FrontendStack extends Construct {
         blockPublicPolicy: false,
         restrictPublicBuckets: false,
       }),
-      //blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true
     });
-/*
-    bucket.addToResourcePolicy(
-      new PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.AnyPrincipal()],
-        actions: ["s3:*"],
-        resources: [bucket.bucketArn, `${bucket.bucketArn}/*`],
-      }),
-    );
-    */
  
-//
-
-   
-/*
-    // Source bundle
-    const srcBundle = s3deploy.Source.asset('../../findy-wallet-pwa', {
-      bundling: {
-        command: [
-          'sh', '-c',
-          'npm ci && npm run build && ' +
-          'apk add bash && ' +
-          `./create-set-env.sh "./tools/env-docker/set-env.sh" "./build/set-env.sh" "${bucketName}" "${process.env.API_SUB_DOMAIN_NAME}.${process.env.DOMAIN_NAME}" "${GRPCPortNumber}" && ` +
-          `./create-set-env.sh "./tools/env-docker/set-env-cli.sh" "./build/set-env-cli.sh" "${bucketName}" "${process.env.API_SUB_DOMAIN_NAME}.${process.env.DOMAIN_NAME}" "${GRPCPortNumber}" && ` +
-          'cp -R ./build/. /asset-output/'
-        ],
-        image: DockerImage.fromRegistry('public.ecr.aws/docker/library/node:18.12-alpine3.17'),
-        environment: {
-          REACT_APP_GQL_HOST: bucketName,
-          REACT_APP_AUTH_HOST: bucketName,
-          REACT_APP_HTTP_SCHEME: 'https',
-          REACT_APP_WS_SCHEME: 'wss',
-        },
-      },
-    });
-    */
-
-    
-
-  
     
 
     // Allow access only from cloudfront

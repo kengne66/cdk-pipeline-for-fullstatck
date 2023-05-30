@@ -78,7 +78,12 @@ export class fullStackPipeline extends cdk.Stack {
     const infraInput = CodePipelineSource.gitHub('kengne66/cdk-pipeline-for-fullstatck', 'main', {
       authentication: githubAuth
     });
+
     const websiteInput = CodePipelineSource.gitHub('kengne66/angular-website-example', 'master', {
+      authentication: githubAuth
+    });
+
+    const lambdaInput = CodePipelineSource.gitHub('kengne66/express-lambda', 'master', {
       authentication: githubAuth
     });
 
@@ -88,7 +93,8 @@ export class fullStackPipeline extends cdk.Stack {
         input: infraInput,
 
         additionalInputs: {
-          "../static-website":websiteInput
+          "../static-website": websiteInput,
+          "../lambda-code": lambdaInput
       
         },
 
@@ -167,6 +173,44 @@ export class fullStackPipeline extends cdk.Stack {
       
       }
     ));
+
+    const BuildLambda = new InfraPipelineStage(this, "buildLambdaStage", {
+      env: props?.env,
+    });
+    const BuilLambdaStage = fullstackpipeline.addStage(BuildLambda);
+
+    // Use custom step to update with custom healthy settings
+ 
+/*
+    BuildAngularStage.addPost(
+      new CodeBuildStep('BuildLambdaStage', {
+        
+        input: websiteInput,
+        
+
+        installCommands: [
+          'pwd',
+          'npm install -g aws-cdk',
+          'ls',
+          'apt install zip'
+      ],
+        commands: ['npm ci', 'npm run build', 'ls dist/websitePractise', 'rm -r artifacts && mkdir artifacts', 'rsync -a dist/websitePractise/ artifacts/', 'ls artifacts', 'aws s3 sync artifacts/. s3://angularwebsite.pierre.com'],
+        buildEnvironment: {
+          // The user of a Docker image asset in the pipeline requires turning on
+          // 'dockerEnabledForSelfMutation'.
+          buildImage: LinuxBuildImage.STANDARD_6_0
+        },
+        primaryOutputDirectory: 'dist/websitePractise',
+        
+      
+      }
+    ));
+*/
+
+
+
+
+
   /*
     const deploy1 = new InfraPipelineStage(this, "Deploy1", {
       env: props?.env,

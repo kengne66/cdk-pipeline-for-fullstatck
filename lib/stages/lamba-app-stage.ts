@@ -8,6 +8,8 @@ export class LambdaAppStage extends cdk.Stage {
     constructor(scope: Construct, id: string, props?: cdk.StageProps) {
       super(scope, id, props);
 
-      const lambdaStack = new LambdaStack(this, 'LambdaStack');
+      const lambdaStack = new LambdaStack(this, 'LambdaStack', {
+        stageName: "dev"
+      });
     }
 }

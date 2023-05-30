@@ -2,6 +2,9 @@
 import * as cdk from 'aws-cdk-lib';
 import { fullStackPipeline } from '../lib/fullstack-pipeline-stack';
 
+
+//https://github.com/findy-network/findy-agent-infra/blob/master/aws-ecs/lib/constants.ts
+
 const app = new cdk.App();
 
 new fullStackPipeline(app, 'fullStackPipeline', {
