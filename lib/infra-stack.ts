@@ -1,7 +1,7 @@
 import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 //import { Backend } from "./backend";
-import { FrontendStack } from "./frontend";
+import { FrontendStack } from "./frontend-stack";
 
 
 
