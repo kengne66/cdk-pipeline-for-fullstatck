@@ -1,15 +1,81 @@
 import * as cdk from 'aws-cdk-lib';
+
 import { Construct } from "constructs";
+
 import { LambdaStack } from '../lambda-stack';
+
+import { CfnVPCCidrBlock, VpcEndpoint } from 'aws-cdk-lib/aws-ec2';
+
+import { VpcSubnetGroupType } from 'aws-cdk-lib/cx-api';
+
+import { cognitoStack } from '../cognito-stack';
+
+import { SecretValue, Environment } from 'aws-cdk-lib';
+
+
+
+
+
+export interface LambdastageProps extends cdk.StageProps {
+
+  readonly stageName: string;
+
+  //readonly vpcID: string
+
+  //readonly vpcSubnets: string[]
+
+  ///readonly availabiltyZone: string[]
+
+}
+
+
 
 
 export class LambdaAppStage extends cdk.Stage {
 
-    constructor(scope: Construct, id: string, props?: cdk.StageProps) {
+    readonly uatEnv: cdk.Environment;
+
+    constructor(scope: Construct, id: string, props: LambdastageProps) {
+
       super(scope, id, props);
 
+
+
+
+      this.uatEnv = {
+
+        region: 'us-east-1',
+
+        account: '969829910614'
+
+      }
+
+
+
+
+     /* const CognitoStack = new cognitoStack(this, 'cognitostack',{
+
+        stageName: props.stageName,
+
+        env: this.uatEnv  
+
+      })*/
+
+
+
+
       const lambdaStack = new LambdaStack(this, 'LambdaStack', {
-        stageName: "dev"
-      });
+
+        stageName: props.stageName,
+
+        env: this.uatEnv
+
+      });  
+
+      //lambdaStack.addDependency(CognitoStack)
+
     }
+
+   
+
 }
