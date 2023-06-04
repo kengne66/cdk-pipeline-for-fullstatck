@@ -213,7 +213,7 @@ export class fullStackPipeline extends Stack {
 
     //const infraInput = CodePipelineSource.codeCommit(stackrepo, 'master')
     const infraInput = CodePipelineSource.gitHub('kengne66/cdk-pipeline-for-fullstatck', 'main', {
-      authentication: SecretValue.secretsManager('github-token'),
+      authentication: SecretValue.secretsManager('github-kengne'),
     })
 
    
@@ -225,12 +225,12 @@ export class fullStackPipeline extends Stack {
 
     //const lambdaInput = CodePipelineSource.codeCommit(lambdarepo, 'main')
     const lambdaInput = CodePipelineSource.gitHub(`kengne66/${props.uiPackage}`, 'master', {
-      authentication: SecretValue.secretsManager('github-token'),
+      authentication: SecretValue.secretsManager('github-kengne'),
     })
 
     //const uiInput = CodePipelineSource.codeCommit(uirepo, 'master')
     const uiInput = CodePipelineSource.gitHub(`kengne66/${props.lambdaPackage}`, 'master', {
-      authentication: SecretValue.secretsManager('github-token'),
+      authentication: SecretValue.secretsManager('github-kengne'),
     })
 
 

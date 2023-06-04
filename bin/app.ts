@@ -7,20 +7,20 @@ import { fullStackPipeline } from '../lib/fullstack-pipeline-stack';
 
 
 
-const uatUiPackageName = 'Envision'
+const uatUiPackageName = 'angular-website-example'
 
-const prodUiPackageName = 'eapdp-backend-api-prod'
+const prodUiPackageName = 'angular-website-example'
 
-const devUiPackageName = 'eapdp-backend-api-dev'
-
-
+const devUiPackageName = 'angular-website-example'
 
 
-const uatLambdaPackageName = 'EAPDP_Backend_Lambda_DEV'
 
-const prodLambdaPackageName = 'eapdp_backend_lambda_prod'
 
-const devLambdaPackageName = 'eapdp_backend_lambda_dev'
+const uatLambdaPackageName = 'express-lambda'
+
+const prodLambdaPackageName = 'express-lambda'
+
+const devLambdaPackageName = 'express-lambda'
 
 
 
