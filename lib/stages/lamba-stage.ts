@@ -53,7 +53,7 @@ export class LambdaAppStage extends cdk.Stage {
 
 
 
-      const cognitostack = new cognitoStack(this, `props.{stageName}-cognitoStack`, {
+      const cognitostack = new cognitoStack(this, `{props.stageName}-cognitoStack`, {
         stage: props.stageName,
         env: this.uatEnv
       })
@@ -62,7 +62,7 @@ export class LambdaAppStage extends cdk.Stage {
 
 
 
-      const lambdaStack = new LambdaStack(this, 'LambdaStack', {
+      const lambdaStack = new LambdaStack(this, '{props.stageName}-LambdaStack', {
 
         stageName: props.stageName,
 
