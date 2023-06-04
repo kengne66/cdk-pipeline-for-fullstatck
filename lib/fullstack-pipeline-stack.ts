@@ -192,16 +192,7 @@ export class fullStackPipeline extends Stack {
     super(scope, id, props);
 
    
-
-    this.uatEnv = {
-
-      region: 'us-east-1',
-
-      account: '673233218795'
-
-    }
-
-   
+  
 
     console.log(`uiPackage: ${props.uiPackage}`)
 
@@ -224,18 +215,19 @@ export class fullStackPipeline extends Stack {
     //const lambdarepo = codecommit.Repository.fromRepositoryName(this, 'Lambda_code', props.lambdaPackage);
 
    
+  //const uiInput = CodePipelineSource.codeCommit(uirepo, 'master')
+  const uiInput = CodePipelineSource.gitHub(`kengne66/${props.uiPackage}`, 'master', {
+    authentication: SecretValue.secretsManager('github-kengne'),
+  })
+
+
 
     //const lambdaInput = CodePipelineSource.codeCommit(lambdarepo, 'main')
-    const lambdaInput = CodePipelineSource.gitHub(`kengne66/${props.uiPackage}`, 'master', {
+    const lambdaInput = CodePipelineSource.gitHub(`kengne66/${props.lambdaPackage}`, 'master', {
       authentication: SecretValue.secretsManager('github-kengne'),
     })
 
-    //const uiInput = CodePipelineSource.codeCommit(uirepo, 'master')
-    const uiInput = CodePipelineSource.gitHub(`kengne66/${props.lambdaPackage}`, 'master', {
-      authentication: SecretValue.secretsManager('github-kengne'),
-    })
-
-
+  
 
 
 
