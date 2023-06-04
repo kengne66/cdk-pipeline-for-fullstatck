@@ -280,7 +280,7 @@ export class fullStackPipeline extends Stack {
    
 
 
-/*
+
 
 
 
@@ -378,7 +378,7 @@ export class fullStackPipeline extends Stack {
 
     const BuildLambdaStage = fullstackpipeline.addStage(BuildLambda);  
 
-*/
+
 
 
     // Use custom step to update with custom healthy settings
