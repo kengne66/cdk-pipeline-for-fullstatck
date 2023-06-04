@@ -86,7 +86,7 @@ new fullStackPipeline(app, 'fullStackPipeline', {
 
   env: {
 
-    account: ('969829910614'),
+    account: ('673233218795'),
 
     region: ('us-east-1'),
 

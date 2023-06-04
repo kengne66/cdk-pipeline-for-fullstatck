@@ -197,7 +197,7 @@ export class fullStackPipeline extends Stack {
 
       region: 'us-east-1',
 
-      account: '969829910614'
+      account: '673233218795'
 
     }
 
