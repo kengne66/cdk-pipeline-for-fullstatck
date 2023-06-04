@@ -206,12 +206,14 @@ export class fullStackPipeline extends Stack {
     console.log(`uiPackage: ${props.uiPackage}`)
 
    // const deploymentEnv = props.DeploymentEnv
-
+   //arn:aws:codestar-connections:us-east-1:673233218795:connection/0206d2f3-305c-40b4-a635-15ea69d05302
    
 
     //const stackrepo = codecommit.Repository.fromRepositoryName(this, 'cdk-source-code','cdk-code');
 
     //const infraInput = CodePipelineSource.codeCommit(stackrepo, 'master')
+    
+    
     const infraInput = CodePipelineSource.gitHub('kengne66/cdk-pipeline-for-fullstatck', 'main', {
       authentication: SecretValue.secretsManager('github-kengne'),
     })

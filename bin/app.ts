@@ -24,7 +24,6 @@ const devLambdaPackageName = 'express-lambda'
 
 
 
-
 const deploymentEnv = 'uat'
 
 
@@ -37,9 +36,9 @@ let lambdaPackageName = "";
 
 
 
-function deployParameters() {
+function deployParameters(deployEnv: string) {
 
-  const deployEnv = deploymentEnv
+
 
 
 
@@ -68,10 +67,10 @@ function deployParameters() {
 
   }
 
-
-
-
 }
+
+
+deployParameters(deploymentEnv)
 
 
 
