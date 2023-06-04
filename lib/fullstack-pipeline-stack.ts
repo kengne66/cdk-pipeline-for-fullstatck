@@ -34,7 +34,7 @@ import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 
 //import { IStage } from 'aws-cdk-lib/aws-apigateway';
 
-
+import { Stack, StackProps } from "aws-cdk-lib";
 
 
 import { CodeBuildStep, CodePipeline, CodePipelineSource, ShellStep, StageDeployment } from 'aws-cdk-lib/pipelines';
@@ -87,7 +87,7 @@ import { IRepository } from 'aws-cdk-lib/aws-ecr';
 
 
 
-interface InfraPipelineProperties extends cdk.StackProps {
+interface InfraPipelineProperties extends StackProps {
 
  // readonly DeploymentEnv: string
 
@@ -166,7 +166,7 @@ const environmentVariables: Record<string, codebuild.BuildEnvironmentVariable> =
 
 
 
-export class fullStackPipeline extends cdk.Stack {
+export class fullStackPipeline extends Stack {
 
   readonly uatEnv: Environment
 
@@ -209,37 +209,23 @@ export class fullStackPipeline extends cdk.Stack {
 
    
 
-    const stackrepo = codecommit.Repository.fromRepositoryName(this, 'cdk-source-code','cdk-code');
+    //const stackrepo = codecommit.Repository.fromRepositoryName(this, 'cdk-source-code','cdk-code');
 
-    const infraInput = CodePipelineSource.codeCommit(stackrepo, 'master')
-
-   
-
-    const uirepo = codecommit.Repository.fromRepositoryName(this, 'uitesting', props.uiPackage);
-
-    //const uirepoprod = codecommit.Repository.fromRepositoryName(this, 'uitesting', props.prodUiPackage);
-
-    //const uirepodev = codecommit.Repository.fromRepositoryName(this, 'uitesting', props.devUiPackage);
-
-
-
+    //const infraInput = CodePipelineSource.codeCommit(stackrepo, 'master')
+    const infraInput = CodePipelineSource.gitHub('kengne66/cdk-pipeline-for-fullstatck', 'main')
 
    
 
-   
-
-    const lambdarepo = codecommit.Repository.fromRepositoryName(this, 'Lambda_code', props.lambdaPackage);
-
-    //const lambdarepouat = codecommit.Repository.fromRepositoryName(this, 'Lambda_code', props.uatLambdaPackage);
-
-    //const lambdarepodev = codecommit.Repository.fromRepositoryName(this, 'Lambda_code', props.devLambdaPackage);
+   // const uirepo = codecommit.Repository.fromRepositoryName(this, 'uitesting', props.uiPackage); 
+    //const lambdarepo = codecommit.Repository.fromRepositoryName(this, 'Lambda_code', props.lambdaPackage);
 
    
 
-    const lambdaInput = CodePipelineSource.codeCommit(lambdarepo, 'main')
+    //const lambdaInput = CodePipelineSource.codeCommit(lambdarepo, 'main')
+    const lambdaInput = CodePipelineSource.gitHub(`kengne66/${props.uiPackage}`, 'master')
 
-    const uiInput = CodePipelineSource.codeCommit(uirepo, 'master')
-
+    //const uiInput = CodePipelineSource.codeCommit(uirepo, 'master')
+    const uiInput = CodePipelineSource.gitHub(`kengne66/${props.lambdaPackage}`, 'master')
 
 
 

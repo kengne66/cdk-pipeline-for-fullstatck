@@ -35,7 +35,7 @@ import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 
 import * as iam from 'aws-cdk-lib/aws-iam';
-
+import { Stack, StackProps } from "aws-cdk-lib";
 
 
 
@@ -46,7 +46,7 @@ import { ISource } from "aws-cdk-lib/aws-codebuild";
 
 
 
-interface FrontendProps {
+interface FrontendProps extends StackProps {
 
   rootDomainName: string;
 
@@ -59,11 +59,11 @@ interface FrontendProps {
 
 
 
-export class FrontendStack extends Construct {
+export class FrontendStack extends Stack{
 
   constructor(scope: Construct, id: string, props: FrontendProps) {
 
-    super(scope, id);
+    super(scope, id, props);
 
 
 

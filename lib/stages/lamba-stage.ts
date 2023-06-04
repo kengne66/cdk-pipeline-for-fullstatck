@@ -8,11 +8,12 @@ import { CfnVPCCidrBlock, VpcEndpoint } from 'aws-cdk-lib/aws-ec2';
 
 import { VpcSubnetGroupType } from 'aws-cdk-lib/cx-api';
 
-import { cognitoStack } from '../cognito-stack';
+
 
 import { SecretValue, Environment } from 'aws-cdk-lib';
 
 
+import { cognitoStack } from '../cognito-stack'
 
 
 
@@ -48,18 +49,15 @@ export class LambdaAppStage extends cdk.Stage {
 
         account: '969829910614'
 
-      }
+      };
 
 
 
+      const cognitostack = new cognitoStack(this, `props.{stageName}-cognitoStack`, {
+        stage: props.stageName,
+        env: this.uatEnv
+      })
 
-     /* const CognitoStack = new cognitoStack(this, 'cognitostack',{
-
-        stageName: props.stageName,
-
-        env: this.uatEnv  
-
-      })*/
 
 
 

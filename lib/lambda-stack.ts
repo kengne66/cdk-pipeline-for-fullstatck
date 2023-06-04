@@ -359,3 +359,5 @@ export class LambdaStack extends Stack {
       })
 
       frontendPermission.bind1(dbDeleteAdditionalcriteriaMethod)
+    }
+}
