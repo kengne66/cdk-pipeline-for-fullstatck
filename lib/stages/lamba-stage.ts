@@ -70,7 +70,7 @@ export class LambdaAppStage extends cdk.Stage {
 
       });  
 
-      //lambdaStack.addDependency(CognitoStack)
+      lambdaStack.addDependency(cognitostack)
 
     }
 

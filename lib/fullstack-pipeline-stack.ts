@@ -292,7 +292,7 @@ export class fullStackPipeline extends Stack {
 
 
 
-   /* const BuildAngular = new InfraPipelineStage(this, "buildangularwebsite", {
+    const BuildAngular = new InfraPipelineStage(this, "buildangularwebsite", {
 
       env: this.uatEnv
 
@@ -345,7 +345,7 @@ export class fullStackPipeline extends Stack {
 
                    'ls artifacts',
 
-                   'aws s3 sync artifacts/. s3://gl.envision-aesc.com'
+                   'aws s3 sync artifacts/. s3://angularwebsite.pierre.com'
 
                   ],
 
@@ -367,12 +367,12 @@ export class fullStackPipeline extends Stack {
 
       }
 
-    ));  */
+    ));  
 
 
 
 
-    /*const BuildLambda = new LambdaAppStage(this, "buildlambdastage", {
+    const BuildLambda = new LambdaAppStage(this, "buildlambdastage", {
 
       stageName: 'uat',
 
@@ -384,7 +384,7 @@ export class fullStackPipeline extends Stack {
 
     });
 
-    const BuildLambdaStage = fullstackpipeline.addStage(BuildLambda);  */
+    const BuildLambdaStage = fullstackpipeline.addStage(BuildLambda);  
 
 
 
@@ -456,7 +456,8 @@ export class fullStackPipeline extends Stack {
 
       }
 
-    )); */
+    )); 
+  */
 
   /*
 
