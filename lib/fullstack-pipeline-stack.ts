@@ -329,11 +329,11 @@ export class fullStackPipeline extends Stack {
 
                    'npm run build',
 
-                   'ls dist/eapdp-ui',
+                   'ls dist/websitePractise',
 
                    'rm -r artifacts && mkdir artifacts',
 
-                   'rsync -a dist/eapdp-ui/ artifacts/',
+                   'rsync -a dist/websitePractise/ artifacts/',
 
                    'ls artifacts',
 
@@ -351,7 +351,7 @@ export class fullStackPipeline extends Stack {
 
         },
 
-        primaryOutputDirectory: 'dist/eapdp-ui',
+        primaryOutputDirectory: 'dist/websitePractise',
 
        
 
